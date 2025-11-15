@@ -1,7 +1,5 @@
 import { MoreVertical, ChevronLast, ChevronFirst, UserRound, Box } from "lucide-react"
-import { useContext, createContext, useState } from "react"
-import type { ReactNode } from "react"
-
+import { useContext, createContext, useState, type  ReactNode  } from "react"
 const SidebarContext = createContext({expanded:false})
 
 export default function Sidebar({ children }: { children: ReactNode }) {
