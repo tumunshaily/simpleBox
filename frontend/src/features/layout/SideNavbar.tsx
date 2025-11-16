@@ -1,10 +1,26 @@
 import { MoreVertical, ChevronLast, ChevronFirst, UserRound, Box } from "lucide-react"
 import { useContext, createContext, useState, type  ReactNode  } from "react"
 const SidebarContext = createContext({expanded:false})
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Link } from "@tanstack/react-router"
 
-export default function Sidebar({ children }: { children: ReactNode }) {
+
+export default function Sidebar({ userName, userEmail, children }: { userName: string, userEmail:string, children: ReactNode }) {
   const [expanded, setExpanded] = useState(true)
-  
+  const [login, setLogin] = useState(false);
+  const logoutHandler = () => {
+    // do the api call to logout 
+
+    // if api success logout 
+    setLogin(false)
+  }
   return (
     <aside className="flex h-screen items-center">
       <nav className="h-full inline-flex flex-col bg-white border-r shadow-sm">
@@ -34,11 +50,34 @@ export default function Sidebar({ children }: { children: ReactNode }) {
               overflow-hidden transition-all $ w-52 ml-3
           `}
           >
-            <div className="leading-4">
-              <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
-            </div>
-            <MoreVertical size={20} color="grey" />
+            {!login ? <div className="leading-4">
+              <h4 className="font-semibold">Please login</h4>
+              <span className="text-xs text-gray-600">to access your files</span>
+            </div> : <div className="leading-4">
+              <h4 className="font-semibold">{userName}</h4>
+              <span className="text-xs text-gray-600">{userEmail}</span>
+            </div> }
+            
+              <DropdownMenu>
+    <DropdownMenuTrigger>
+      <MoreVertical className=" cursor-pointer bg-gray-50 hover:bg-gray-100 text-black p-1.5 rounded-sm" size={30} />
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      { !login ?  <><Link to="/signUp" className=" cursor-pointer"><DropdownMenuItem>
+        Sign Up
+      </DropdownMenuItem>
+      </Link>
+      <Link to="/signIn" className=" cursor-pointer">
+      <DropdownMenuItem>
+        Sign In
+        </DropdownMenuItem>
+        </Link> </> : <>    <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem></> }
+  
+    </DropdownMenuContent>
+  </DropdownMenu>
+            
           </div>
 }
         </div>
@@ -51,14 +90,16 @@ type SidebarItemProps = {
   icon: ReactNode,
    text:string, 
    active?:boolean, 
-   alert?:boolean
+   alert?:boolean,
+   linkUrl?: string
 }
 
-export function SidebarItem({ icon, text, active, alert }:SidebarItemProps) {
+export function SidebarItem({ icon, text, active, alert, linkUrl}:SidebarItemProps) {
   
   const { expanded } = useContext(SidebarContext);
   
   return (
+    <a href={linkUrl}>
     <li
       className={`
         relative flex items-center py-2 px-3 my-1 pb-2
@@ -101,5 +142,6 @@ export function SidebarItem({ icon, text, active, alert }:SidebarItemProps) {
         </div>
       )}
     </li>
+    </a>
   )
 }

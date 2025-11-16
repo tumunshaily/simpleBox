@@ -10,7 +10,7 @@ authRouter.post("/signup", validateRequestBody(UserRegistration) ,controllers.si
 authRouter.post("/verify-email", validateRequestBody(emailVerification) ,controllers.emailVerification)
 authRouter.post("/logout", controllers.logout)
 authRouter.post("/login", validateRequestBody(userLogin) ,controllers.signin)
-authRouter.post("/generate-reset-token",  validateRequestBody(resetPassword), controllers.generateResetLink)
+authRouter.post("/generate-reset-link",  validateRequestBody(resetPassword), controllers.generateResetLink)
 authRouter.post("/verify-identity",  validateRequestBody(resetPassword), controllers.verifyUserIdentity)
 authRouter.post("/reset-password/:token",controllers.resetPassword)
 authRouter.get("/check-auth",authenticateUser,controllers.checkAuth)

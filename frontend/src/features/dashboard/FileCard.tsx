@@ -5,7 +5,7 @@ type FileCardProp = {
     type: ReactNode,
     fileName:string,
     fileSize:string,
-    fileDownloadLink:string
+    fileDownloadLink?:string
 }
 const FileCard = ({type,fileName,fileSize,fileDownloadLink}:FileCardProp) => {
     let FileType = <FileQuestionMark size={20}/>;
@@ -34,7 +34,7 @@ const FileCard = ({type,fileName,fileSize,fileDownloadLink}:FileCardProp) => {
                 </span>
                 <span className='flex gap-6 mr-2 my-auto'>
                 <button className=' hover:bg-gray-300 h-fit p-1 rounded-sm '><Eye/></button>
-                <button className=' hover:bg-gray-300 h-fit  p-1 rounded-sm'><a href={fileDownloadLink}><Download/></a></button>
+                <button className=' hover:bg-gray-300 h-fit  p-1 rounded-sm'><Download/></button>
                 <button className=' hover:bg-gray-300 h-fit  p-1 rounded-sm'><Trash/></button>
                 </span>
                 
